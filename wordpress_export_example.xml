@@ -32,12 +32,12 @@
 	<pubDate>Tue, 22 Apr 2014 11:12:48 +0000</pubDate>
 	<language>el</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
-	<wp:base_site_url>http://YOUROWNSITE.COM</wp:base_site_url>
-	<wp:base_blog_url>http://YOUROWNSITE.COM</wp:base_blog_url>
+	<wp:base_site_url>http://home.dashwinterson.com/thisgreedypig/</wp:base_site_url>
+	<wp:base_blog_url>http://home.dashwinterson.com/thisgreedypig</wp:base_blog_url>
 
 {!-- SET THE LIMIT LARGE AND IF YOU RUN OUT OF MEMORY, SHRINK IT --}
 <?php $categories = array(); $tags = array(); $lastid=5000; $images=array();?>
-{exp:channel:entries {if segment_3 != ""}channel="{segment_3}"{/if} orderby="date" sort="desc" limit="500000" rdf="off" paginate="top"}  {categories} <?php $categories['{category_id}'] = array("category_name"=>"{category_name}", "category_url_title"=>"{category_url_title}"); ?>  {/categories} {exp:tag:tags entry_id="{entry_id}" backspace="2" orderby="tag_name" sort="desc"}  <?php $tags["{tag}"] = array("tag"=>"{tag}", "websafe_tag"=>"{websafe_tag}", "id"=>$lastid+count($tags)); ?>  {/exp:tag:tags} <?php if (trim("{main_hd_image}") != ""): $images[] = "{main_hd_image}"; endif; ?>{/exp:channel:entries}
+{exp:channel:entries {if segment_3 != ""}channel="{segment_3}"{/if} orderby="date" sort="desc" limit="500000" rdf="off" paginate="top"}  {categories} <?php $categories['{category_id}'] = array("category_name"=>"{category_name}", "category_url_title"=>"{category_url_title}"); ?>  {/categories} <?php if (trim("{main_hd_image}") != ""): $images[] = "{main_hd_image}"; endif; ?>{/exp:channel:entries}
 
 
 
@@ -64,7 +64,7 @@
 	<?php foreach ($images as $key=>$image):?>
 	<item>
 		<title><?php echo basename($image);?></title>
-		<link>http://localhost/YOUROWNSITE.COM/?attachment_id=<?php echo $key+$lastid+count($tags);?></link>
+		<link>http://localhost/thisgreedypig/?attachment_id=<?php echo $key+$lastid+count($tags);?></link>
 		<pubDate>Sun, 23 Mar 2014 23:48:28 +0000</pubDate>
 		<dc:creator><![CDATA[admin]]></dc:creator>
 		<guid isPermaLink="false"><?php echo $image;?></guid>
@@ -97,16 +97,16 @@
 		<link></link>
 		<pubDate>{entry_date format="%r"}</pubDate>
 		<dc:creator><![CDATA[{author}]]></dc:creator>
-		<guid isPermaLink="false">http://www.YOUROWNSITE.COM/wordpress/?p={entry_id}</guid>
+		<guid isPermaLink="false">http://home.dashwinterson.com/wordpress/?p={entry_id}</guid>
 
 		<description></description>
 		
 		
 		{!-- THIS IS FOR ANY SUMMARY OR EXCERPT-TYPE DATA --}
-		<excerpt:encoded><![CDATA[{article_description}]]></excerpt:encoded>
+		<excerpt:encoded><![CDATA[{text_excerpt}]]></excerpt:encoded>
 
 		{!-- THIS IS FOR THE BODY OF YOUR CONTENT -- YOU CAN FORMAT IT HOWEVER YOU'D LIKE HERE --}
-		<content:encoded><![CDATA[{article_body}
+		<content:encoded><![CDATA[{body_text}
 		 ]]></content:encoded>
 		 
 
@@ -141,10 +141,6 @@
 		{categories}
 		<category domain="category" nicename="{category_url_title}"><![CDATA[{category_name}]]></category>
 		{/categories}
-		
-		{exp:tag:tags entry_id="{entry_id}"   backspace="2"   orderby="tag_name"   sort="desc"}
-		<category domain="tag" nicename="<?php echo urlencode(str_replace(array("+", "'"), '-', "{websafe_tag}"));?>"><![CDATA[{tag}]]></category>    
-		{/exp:tag:tags}
 		
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
